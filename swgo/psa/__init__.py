@@ -5,7 +5,9 @@ import numpy as np
 __all__ = ["adaptive_centroid"]
 
 
-def adaptive_centroid(waveform, peak_index, rel_descend_limit):
+def adaptive_centroid(
+    waveform: np.ndarray, peak_index: int, rel_descend_limit: float
+) -> float:
     """
     Calculates the centroid for all samples around peak_index down to rel_descend_limit * waveform[peak_index].
 
@@ -20,19 +22,19 @@ def adaptive_centroid(waveform, peak_index, rel_descend_limit):
 
     Returns
     -------
-    centroid : ndarray
+    centroid : float
         Peak centroid in units "samples"; peak_index if centroid calculation failed.
     """
     n_samples = waveform.size
     if n_samples == 0:
-        return peak_index
+        return float(peak_index)
 
     if (peak_index > (n_samples - 1)) or (peak_index < 0):
         raise ValueError("peak_index must be within the waveform limits")
 
     peak_amplitude = waveform[peak_index]
     if peak_amplitude <= 0.0:
-        return peak_index
+        return float(peak_index)
 
     descend_limit = rel_descend_limit * peak_amplitude
 
@@ -54,4 +56,4 @@ def adaptive_centroid(waveform, peak_index, rel_descend_limit):
     if sum_ != 0.0:
         return jsum / sum_
 
-    return peak_index
+    return float(peak_index)
