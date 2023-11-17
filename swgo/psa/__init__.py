@@ -5,7 +5,7 @@ import numpy.typing as npt
 from scipy.signal import filtfilt
 from scipy.ndimage import convolve1d
 
-__all__ = ["adaptive_centroid"]
+__all__ = ["adaptive_centroid", "upsample", "differentiate", "deconvolve_pole_zero"]
 
 
 def adaptive_centroid(

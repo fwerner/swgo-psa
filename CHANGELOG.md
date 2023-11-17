@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- expose all functions for wildcard import
+
 ## [0.2.0] - 2023-11-17
 
 ### Added
