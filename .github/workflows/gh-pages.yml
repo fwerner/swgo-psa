@@ -11,6 +11,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Update API
       run: |
+        python -m pip install sphinx
         sphinx-apidoc --force --no-toc --no-headings --output docs/source .
         rm docs/source/swgo.rst
     - name: Build HTML
