@@ -11,6 +11,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Update API & build HTML
       run: |
+        python -m pip install -U pip
         python -m pip install sphinx
         python -m pip install -r docs/requirements.txt
         python -m pip install .
