@@ -1,3 +1,6 @@
+docs/build
+docs/source/swgo*.rst
+docs/source/generated/
 swgo/_version.py
 
 __pycache__/

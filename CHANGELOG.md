@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- documentation skeleton and gh-pages action
 - `swgo.psa.adaptive_sum`
 
 ### Fixed
