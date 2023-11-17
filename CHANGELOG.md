@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- add `scipy` to list of dependencies
+- versioning scheme on TestPyPi
 - expose all functions for wildcard import
 
 ## [0.2.0] - 2023-11-17
