@@ -5,7 +5,13 @@ import numpy.typing as npt
 from scipy.signal import filtfilt
 from scipy.ndimage import convolve1d
 
-__all__ = ["adaptive_centroid", "upsample", "differentiate", "deconvolve_pole_zero"]
+__all__ = [
+    "adaptive_centroid",
+    "adaptive_sum",
+    "upsample",
+    "differentiate",
+    "deconvolve_pole_zero",
+]
 
 
 def adaptive_centroid(
@@ -19,7 +25,7 @@ def adaptive_centroid(
     waveform : ArrayLike
         Waveform stored in a 1-dimensional list or numpy array.
     peak_index : int
-        Peak index for each pixel.
+        Peak index for each channel.
     rel_descend_limit : float
         Fraction of the peak value down to which samples are accumulated in the centroid calculation.
 
@@ -60,6 +66,48 @@ def adaptive_centroid(
         return jsum / sum_
 
     return float(peak_index)
+
+
+def adaptive_sum(
+    waveform: npt.ArrayLike, peak_index: int, descend_limit: float
+) -> float:
+    """
+    Calculates the sum of all samples around peak_index down to descend_limit.
+
+    Parameters
+    ----------
+    waveform : ArrayLike
+        Waveform stored in a 1-dimensional list or numpy array.
+    peak_index : int
+        Peak index for each channel.
+    descend_limit : float
+        Absolute value down to which samples are accumulated.
+
+    Returns
+    -------
+    sample_sum : float
+        Sum of samples; 0 if waveform[peak_index] <= descend_limit or len(waveform) == 0.
+    """
+    n_samples = len(waveform)
+    if n_samples == 0:
+        return 0.0
+
+    if (peak_index > (n_samples - 1)) or (peak_index < 0):
+        raise ValueError("peak_index must be within the waveform limits")
+
+    sum_ = 0.0
+
+    j = peak_index
+    while j >= 0 and waveform[j] > descend_limit:
+        sum_ += waveform[j]
+        j -= 1
+
+    j = peak_index + 1
+    while j < n_samples and waveform[j] > descend_limit:
+        sum_ += waveform[j]
+        j += 1
+
+    return sum_
 
 
 def upsample(waveforms: npt.ArrayLike, upsampling: int) -> np.ndarray:

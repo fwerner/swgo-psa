@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- `swgo.psa.adaptive_sum`
+
 ### Fixed
 
 - expose all functions for wildcard import
