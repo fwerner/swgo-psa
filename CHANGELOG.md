@@ -7,10 +7,18 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - type annotations
+- `swgo.psa.upsample`
+- `swgo.psa.differentiate`
+- `swgo.psa.deconvolve_pole_zero`
+
+### Changed
+
+- make `swgo.psa.adaptive_centroid` work for lists as well
 
 ### Fixed
 
 - return value of `swgo.psa.adaptive_centroid` was of type `int` (via `peak_index`) on malformed inputs
+- upload of dev versions to TestPyPi
 
 ## [0.1.0] - 2023-11-16
 

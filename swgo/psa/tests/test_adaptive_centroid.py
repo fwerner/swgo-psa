@@ -1,10 +1,8 @@
-import numpy as np
-
 from swgo.psa import adaptive_centroid
 
 
 def test_adaptive_centroid():
-    x = np.zeros(16)
+    x = [0.0] * 16
     assert adaptive_centroid(x, 8, 0) == 8
     x[8] = 1.0
     assert adaptive_centroid(x, 8, 0) == 8
