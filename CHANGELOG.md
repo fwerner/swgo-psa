@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.3.0] - 2023-11-17
+
 ### Added
 
 - documentation skeleton and gh-pages action
