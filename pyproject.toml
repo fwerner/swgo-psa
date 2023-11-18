@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=60", "setuptools-scm>=8.0"]
+requires = ["setuptools>=60", "setuptools-scm[toml]>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -22,7 +22,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/fwerner/swgo-psa"
+Homepage = "https://github.com/fwerner/swgo-psa/"
+Documentation = "https://fwerner.github.io/swgo-psa/"
 Repository = "https://github.com/fwerner/swgo-psa.git"
 Issues = "https://github.com/fwerner/swgo-psa/issues"
 Changelog = "https://github.com/fwerner/swgo-psa/blob/master/CHANGELOG.md"

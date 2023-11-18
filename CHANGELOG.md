@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- add links to available resources in readme and on PyPi
+
 ## [0.3.0] - 2023-11-17
 
 ### Added
