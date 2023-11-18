@@ -1,6 +1,15 @@
 swgo.psa package
 ================
 
+Submodules
+----------
+
+
+.. automodule:: swgo.psa.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
