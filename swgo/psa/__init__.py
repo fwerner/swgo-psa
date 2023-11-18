@@ -1,9 +1,13 @@
 """Pulse-shape analysis for SWGO."""
 
+from typing import Union
+
 import numpy as np
 import numpy.typing as npt
 from scipy.signal import filtfilt
 from scipy.ndimage import convolve1d
+
+from .utils import wrap_1d_nn
 
 __all__ = [
     "adaptive_centroid",
@@ -14,26 +18,35 @@ __all__ = [
 ]
 
 
+@wrap_1d_nn  # Note that the docstring & type annotations are written for the wrapped function
 def adaptive_centroid(
-    waveform: npt.ArrayLike, peak_index: int, rel_descend_limit: float
-) -> float:
+    waveforms: npt.ArrayLike,
+    peak_indices: Union[int, npt.ArrayLike],
+    rel_descend_limits: Union[float, npt.ArrayLike],
+) -> np.ndarray:
     """
-    Calculates the centroid for all samples around peak_index down to rel_descend_limit * waveform[peak_index].
+    For each waveform, calculates the centroid for all samples around peak_index down to
+    rel_descend_limit * waveform[peak_index].
 
     Parameters
     ----------
-    waveform : ArrayLike
-        Waveform stored in a 1-dimensional list or numpy array.
-    peak_index : int
-        Peak index for each channel.
-    rel_descend_limit : float
-        Fraction of the peak value down to which samples are accumulated in the centroid calculation.
+    waveforms : ArrayLike of shape (n_channels, n_samples)
+        Waveforms stored in a 2-dimensional array-like.
+    peak_indices : ArrayLike of ints or scalar int
+        Peak index for each channel. If a scalar is given, the same peak index is used for all channels.
+    rel_descend_limits : ArrayLike of floats or scalar float
+        Fraction of the peak value down to which samples are accumulated in the centroid calculation for each channel.
+        If a scalar is given, the same limit is used for all channels.
 
     Returns
     -------
-    centroid : float
-        Peak centroid in units "samples"; peak_index if centroid calculation failed.
+    centroids : 1-dimensional np.ndarray of floats or (0-dimensional array of) float
+        Peak centroids in units "samples"; peak_index if centroid calculation failed.
     """
+    waveform = waveforms
+    peak_index = peak_indices
+    rel_descend_limit = rel_descend_limits
+
     n_samples = len(waveform)
     if n_samples == 0:
         return float(peak_index)
@@ -68,32 +81,40 @@ def adaptive_centroid(
     return float(peak_index)
 
 
+@wrap_1d_nn
 def adaptive_sum(
-    waveform: npt.ArrayLike, peak_index: int, descend_limit: float
-) -> float:
+    waveforms: npt.ArrayLike, peak_indices: Union[int, npt.ArrayLike], descend_limits: Union[float, npt.ArrayLike]
+) -> np.ndarray:
     """
-    Calculates the sum of all samples around peak_index down to descend_limit.
+    For each waveform, calculates the sum of all samples around peak_index down to descend_limit.
 
     Parameters
     ----------
-    waveform : ArrayLike
-        Waveform stored in a 1-dimensional list or numpy array.
-    peak_index : int
-        Peak index for each channel.
-    descend_limit : float
-        Absolute value down to which samples are accumulated.
+    waveforms : ArrayLike of shape (n_channels, n_samples)
+        Waveforms stored in a 2-dimensional array-like.
+    peak_index : ArrayLike of ints or scalar int
+        Peak index for each channel. If a scalar is given, the same peak index is used for all channels.
+    descend_limit : ArrayLike of floats or scalar float
+        Absolute value down to which samples are accumulated for each channel. If a scalar is given, the same limit is used for all channels.
 
     Returns
     -------
-    sample_sum : float
+    sample_sum : 1-dimensional np.ndarray of floats or (0-dimensional array of) float
         Sum of samples; 0 if waveform[peak_index] <= descend_limit or len(waveform) == 0.
     """
+    waveform = waveforms
+    peak_index = peak_indices
+    descend_limit = descend_limits
+
     n_samples = len(waveform)
     if n_samples == 0:
         return 0.0
 
     if (peak_index > (n_samples - 1)) or (peak_index < 0):
         raise ValueError("peak_index must be within the waveform limits")
+
+    if waveform[peak_index] <= descend_limit:
+        return 0
 
     sum_ = 0.0
 

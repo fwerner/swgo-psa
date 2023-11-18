@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - add links to available resources in readme and on PyPi
 
+### Fixed
+
+- `swgo.psa.adaptive_sum` and `swgo.psa.adaptive_centroid` now work for both 1-d and 2-d inputs
+
 ## [0.3.0] - 2023-11-17
 
 ### Added
